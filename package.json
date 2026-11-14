@@ -1,0 +1,14 @@
+{
+  "name": "dynamic-portfolio-admin",
+  "version": "1.0.0",
+  "description": "Dynamic student portfolio with an admin dashboard and a REST API (Express, in-memory data).",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test"
+  },
+  "engines": { "node": ">=18" },
+  "license": "MIT",
+  "dependencies": { "express": "^4.19.2" }
+}
