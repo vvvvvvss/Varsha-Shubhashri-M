@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: dynamic-portfolio
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: ADMIN_PASSWORD
+        sync: false   # you will be asked for it in the Render dashboard
