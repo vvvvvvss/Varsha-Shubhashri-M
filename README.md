@@ -2,12 +2,12 @@
 
 A personal portfolio website whose content is served by a REST API, plus an admin dashboard for editing that content from the browser. No source-code changes are needed to add a project, change a skill or update the bio.
 
-| | URL |
-|---|---|
-| Public portfolio | `https://YOUR-APP.onrender.com/` *(replace after deploying)* |
-| Admin dashboard | `https://YOUR-APP.onrender.com/admin` |
-| API root | `https://YOUR-APP.onrender.com/api/portfolio` |
-| GitHub repository | `https://github.com/YOUR-USERNAME/YOUR-REPO` |
+|                   | URL                                                                          |
+| ----------------- | ---------------------------------------------------------------------------- |
+| Public portfolio  | `https://varsha-shubhashri-m..onrender.com/` *(replace after deploying)* |
+| Admin dashboard   | `https://varsha-shubhashri-m..onrender.com/admin`                          |
+| API root          | `https://varsha-shubhashri-m..onrender.com/api/portfolio`                  |
+| GitHub repository | `https://github.com/vvvvvvss/varsha-shubhashri-m.`                         |
 
 > Locally these are `http://localhost:3000/`, `/admin` and `/api/portfolio`.
 
@@ -34,18 +34,21 @@ A personal portfolio website whose content is served by a REST API, plus an admi
 ## Features
 
 **Public portfolio**
+
 - Responsive single-page site (light theme, animated hero, scroll reveals, marquee, project grid).
 - Everything is fetched from `GET /api/portfolio` and rendered in the browser, so edits made in the dashboard show up on the next page load (and when a visitor returns to an already-open tab).
 - Hero stat tiles ("Certifications", "Projects") are derived from the data, so they stay correct automatically.
 - All text is inserted with `textContent`, never `innerHTML`, so content typed into the dashboard cannot inject HTML or scripts.
 
 **Admin dashboard** (`/admin`)
+
 - Password login. Add, view, edit, delete and re-order **projects, skills, achievements, certifications and ML models**.
 - Edit the **profile & contact** section (hero text, about text, status badge, links, footer).
 - Search boxes, confirmation dialogs for deletes, toast messages, inline field-level validation errors.
 - **Backup tab:** download all content as JSON, restore from a JSON file, or reset to the defaults.
 
 **REST API**
+
 - JSON in, JSON out. Correct HTTP verbs and status codes (200, 201, 204, 400, 401, 404, 409, 413, 415, 429).
 - Input validation on every write and a consistent error format.
 
@@ -107,13 +110,13 @@ A personal portfolio website whose content is served by a REST API, plus an admi
 
 Every item has a numeric `id`, plus `createdAt` and `updatedAt` timestamps added by the server. The list order is the display order on the site.
 
-| Collection | Fields (required in **bold**) |
-|---|---|
-| `projects` | **title** (≤80), **description** (≤400), `tech` (list, ≤8 tags), `link` (http/https URL) |
-| `skills` | **name** (≤40), **category** (≤40), `inStack` (bool, default true), `inMarquee` (bool), `aboutTag` (`""`, `accent`, `blue`, `plain`) |
-| `achievements` | **title** (≤80), **description** (≤300) |
-| `certifications` | **name** (≤100), **org** (≤60), `level` (≤60), `link` (URL) |
-| `models` | **name** (≤60), **category** (≤40) |
+| Collection                      | Fields (required in **bold**)                                                                                                                                           |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `projects`                    | **title** (≤80), **description** (≤400), `tech` (list, ≤8 tags), `link` (http/https URL)                                                                   |
+| `skills`                      | **name** (≤40), **category** (≤40), `inStack` (bool, default true), `inMarquee` (bool), `aboutTag` (`""`, `accent`, `blue`, `plain`)              |
+| `achievements`                | **title** (≤80), **description** (≤300)                                                                                                                         |
+| `certifications`              | **name** (≤100), **org** (≤60), `level` (≤60), `link` (URL)                                                                                                |
+| `models`                      | **name** (≤60), **category** (≤40)                                                                                                                              |
 | `profile` *(single object)* | **heroTag**, **heroDescription**, **aboutBody**, `badgeHighlight`, `badgeText`, **email**, `linkedin`, `github`, `substack`, `footerText` |
 
 A **skill** can appear in up to three places: the *Tech Stack* section (grouped by `category`), the scrolling *marquee*, and the tag row in the *About* section.
@@ -128,32 +131,32 @@ Base path: `/api`. Request and response bodies are JSON (`Content-Type: applicat
 
 `{collection}` is one of `projects`, `skills`, `achievements`, `certifications`, `models`.
 
-| Method | Endpoint | Auth | Description | Success |
-|---|---|---|---|---|
-| `GET` | `/api/portfolio` | | Whole portfolio in one response (used by the public page) | `200` |
-| `GET` | `/api/{collection}` | | List items. Optional `?q=text` search. Returns `{ count, items }` | `200` |
-| `GET` | `/api/{collection}/{id}` | | One item | `200` |
-| `POST` | `/api/{collection}` | 🔒 | Create an item. Returns it with a `Location` header | `201` |
-| `PUT` | `/api/{collection}/{id}` | 🔒 | Replace all editable fields | `200` |
-| `PATCH` | `/api/{collection}/{id}` | 🔒 | Update only the fields you send | `200` |
-| `DELETE` | `/api/{collection}/{id}` | 🔒 | Delete the item | `204` |
-| `POST` | `/api/{collection}/{id}/move` | 🔒 | Re-order: body `{ "direction": "up" \| "down" }`. Returns the new list | `200` |
-| `GET` | `/api/profile` | | Profile / contact details | `200` |
-| `PUT` | `/api/profile` | 🔒 | Replace the profile (all required fields needed) | `200` |
-| `PATCH` | `/api/profile` | 🔒 | Update some profile fields | `200` |
+| Method     | Endpoint                        | Auth | Description                                                             | Success |
+| ---------- | ------------------------------- | ---- | ----------------------------------------------------------------------- | ------- |
+| `GET`    | `/api/portfolio`              |      | Whole portfolio in one response (used by the public page)               | `200` |
+| `GET`    | `/api/{collection}`           |      | List items. Optional `?q=text` search. Returns `{ count, items }`   | `200` |
+| `GET`    | `/api/{collection}/{id}`      |      | One item                                                                | `200` |
+| `POST`   | `/api/{collection}`           | 🔒   | Create an item. Returns it with a `Location` header                   | `201` |
+| `PUT`    | `/api/{collection}/{id}`      | 🔒   | Replace all editable fields                                             | `200` |
+| `PATCH`  | `/api/{collection}/{id}`      | 🔒   | Update only the fields you send                                         | `200` |
+| `DELETE` | `/api/{collection}/{id}`      | 🔒   | Delete the item                                                         | `204` |
+| `POST`   | `/api/{collection}/{id}/move` | 🔒   | Re-order: body `{ "direction": "up" \| "down" }`. Returns the new list | `200` |
+| `GET`    | `/api/profile`                |      | Profile / contact details                                               | `200` |
+| `PUT`    | `/api/profile`                | 🔒   | Replace the profile (all required fields needed)                        | `200` |
+| `PATCH`  | `/api/profile`                | 🔒   | Update some profile fields                                              | `200` |
 
 ### Auth and utility endpoints
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| `POST` | `/api/auth/login` | | Body `{ "password": "..." }` → `{ token, expiresIn }` |
-| `POST` | `/api/auth/logout` | 🔒 | Invalidates the token (`204`) |
-| `GET` | `/api/auth/me` | 🔒 | `200` if the token is valid |
-| `GET` | `/api/health` | | `{ "status": "ok" }`, used by hosting health checks |
-| `GET` | `/api/meta` | | Field definitions that the dashboard builds forms from |
-| `GET` | `/api/admin/export` | 🔒 | Download all content as JSON |
-| `POST` | `/api/admin/import` | 🔒 | Restore from an export. Validated first, so it is all-or-nothing |
-| `POST` | `/api/admin/reset` | 🔒 | Restore the default seed content |
+| Method   | Endpoint              | Auth | Description                                                      |
+| -------- | --------------------- | ---- | ---------------------------------------------------------------- |
+| `POST` | `/api/auth/login`   |      | Body `{ "password": "..." }` → `{ token, expiresIn }`       |
+| `POST` | `/api/auth/logout`  | 🔒   | Invalidates the token (`204`)                                  |
+| `GET`  | `/api/auth/me`      | 🔒   | `200` if the token is valid                                    |
+| `GET`  | `/api/health`       |      | `{ "status": "ok" }`, used by hosting health checks            |
+| `GET`  | `/api/meta`         |      | Field definitions that the dashboard builds forms from           |
+| `GET`  | `/api/admin/export` | 🔒   | Download all content as JSON                                     |
+| `POST` | `/api/admin/import` | 🔒   | Restore from an export. Validated first, so it is all-or-nothing |
+| `POST` | `/api/admin/reset`  | 🔒   | Restore the default seed content                                 |
 
 ### Examples
 
@@ -208,16 +211,16 @@ All errors share one shape:
 }
 ```
 
-| Status | When |
-|---|---|
+| Status  | When                                                           |
+| ------- | -------------------------------------------------------------- |
 | `400` | Validation failed, malformed JSON, bad `id`, empty `PATCH` |
-| `401` | Missing, invalid or expired token; wrong password |
-| `404` | Unknown route, collection or id |
-| `409` | A collection already has 200 items |
-| `413` | Request body larger than 200 kB |
-| `415` | Body is not `application/json` |
-| `429` | Too many failed logins from one IP (10 per 15 minutes) |
-| `500` | Unexpected server error (details are logged, not leaked) |
+| `401` | Missing, invalid or expired token; wrong password              |
+| `404` | Unknown route, collection or id                                |
+| `409` | A collection already has 200 items                             |
+| `413` | Request body larger than 200 kB                                |
+| `415` | Body is not `application/json`                               |
+| `429` | Too many failed logins from one IP (10 per 15 minutes)         |
+| `500` | Unexpected server error (details are logged, not leaked)       |
 
 ---
 
@@ -250,9 +253,9 @@ npm start
 
 Then open:
 
-- Portfolio: <http://localhost:3000/>
-- Admin: <http://localhost:3000/admin>
-- Raw data: <http://localhost:3000/api/portfolio>
+- Portfolio: [http://localhost:3000/](http://localhost:3000/)
+- Admin: [http://localhost:3000/admin](http://localhost:3000/admin)
+- Raw data: [http://localhost:3000/api/portfolio](http://localhost:3000/api/portfolio)
 
 `npm run dev` restarts the server automatically when you edit files. Use `PORT=4000 npm start` to change the port.
 
@@ -314,14 +317,14 @@ Open `https://YOUR-APP.onrender.com/`, then `/admin`, sign in, add a project, an
 
 Captured from a local run. Retake them from your deployed site for your submission if you prefer.
 
-| | |
-|---|---|
-| ![Public hero](docs/screenshots/01-public-hero.png) **Public portfolio** | ![Public projects](docs/screenshots/02-public-projects.png) **Projects rendered from the API** |
-| ![Overview](docs/screenshots/03-admin-overview.png) **Dashboard overview** | ![Projects list](docs/screenshots/04-admin-projects-list.png) **Projects list (view / edit / delete / re-order)** |
-| ![Validation](docs/screenshots/05-admin-validation-errors.png) **API validation errors shown in the form** | ![After add](docs/screenshots/06-admin-after-add.png) **New project added (count 6 → 7)** |
-| ![Public updated](docs/screenshots/07-public-reflects-change.png) **Same project instantly on the public site** | ![Confirm delete](docs/screenshots/08-admin-confirm-delete.png) **Delete confirmation** |
-| ![Skills](docs/screenshots/09-admin-skills.png) **Skills management** | ![Profile](docs/screenshots/10-admin-profile.png) **Profile & contact editor** |
-| ![Backup](docs/screenshots/11-admin-backup.png) **Backup / restore / reset** | ![Mobile](docs/screenshots/12-public-mobile.png) **Responsive mobile view** |
+|                                                                                                                       |                                                                                                                         |
+| --------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| ![Public hero](docs/screenshots/01-public-hero.png) **Public portfolio**                                        | ![Public projects](docs/screenshots/02-public-projects.png) **Projects rendered from the API**                    |
+| ![Overview](docs/screenshots/03-admin-overview.png) **Dashboard overview**                                      | ![Projects list](docs/screenshots/04-admin-projects-list.png) **Projects list (view / edit / delete / re-order)** |
+| ![Validation](docs/screenshots/05-admin-validation-errors.png) **API validation errors shown in the form**      | ![After add](docs/screenshots/06-admin-after-add.png) **New project added (count 6 → 7)**                        |
+| ![Public updated](docs/screenshots/07-public-reflects-change.png) **Same project instantly on the public site** | ![Confirm delete](docs/screenshots/08-admin-confirm-delete.png) **Delete confirmation**                           |
+| ![Skills](docs/screenshots/09-admin-skills.png) **Skills management**                                           | ![Profile](docs/screenshots/10-admin-profile.png) **Profile & contact editor**                                    |
+| ![Backup](docs/screenshots/11-admin-backup.png) **Backup / restore / reset**                                    | ![Mobile](docs/screenshots/12-public-mobile.png) **Responsive mobile view**                                       |
 
 ---
 
